@@ -167,25 +167,42 @@ class BinaryTree {
     return false;
   };
 
-  isBinarySearchTree = () => {
-    return isBinarySearchTreeImplemetation(
+  DFSIsValidBST = () => {
+    return DFSIsValidBSTImplemetation(
       this.rootNode,
       Number.NEGATIVE_INFINITY,
       Number.POSITIVE_INFINITY
     );
   };
 
-  isBinarySearchTreeImplemetation = (node, min, max) => {
+  DFSIsValidBSTImplemetation = (node, min, max) => {
     if (!node) return true;
     if (node.value < min || node.value > max) return false;
     return (
-      this.isBinarySearchTreeImplemetation(
-        node.leftChild,
-        min,
-        node.value - 1
-      ) &&
-      this.isBinarySearchTreeImplemetation(node.rightChild, node.value + 1, max)
+      this.DFSIsValidBSTImplemetation(node.leftChild, min, node.value - 1) &&
+      this.DFSIsValidBSTImplemetation(node.rightChild, node.value + 1, max)
     );
+  };
+
+  BFSIsvalidBST = function () {
+    const queue = [];
+    queue.push(this.root);
+    while (queue.length) {
+      const currentNode = queue.shift();
+      if (currentNode.left) {
+        queue.push(currentNode.left);
+        if (currentNode.left.val > currentNode.val) {
+          return false;
+        }
+      }
+      if (currentNode.right) {
+        queue.push(currentNode.right);
+        if (currentNode.val > currentNode.right.val) {
+          return false;
+        }
+      }
+    }
+    return true;
   };
 
   getNodeAtDistance = (height) => {
@@ -229,7 +246,7 @@ class BinaryTree {
         queue.push(currentNode.right);
       }
     }
-t
+    t;
     return list;
   };
 
