@@ -58,6 +58,84 @@ class Graph {
       }
     }
   };
+
+  traverseDFRecursion = (label) => {
+    const node = this.nodes[label];
+    if (!node) return;
+    this.traverseDFRecursionImplementation(node, {});
+  };
+  traverseDFRecursionImplementation = (node, visited) => {
+    console.log(node);
+    visited[node] = true;
+    const list = this.adjacencyList[node];
+    for (let i = 0; i < list.length; i++) {
+      if (visited[list[i]]) continue;
+      this.traverseDFRecursionImplementation(list[i], visited);
+    }
+  };
+
+  traverseDFIteration = (label) => {
+    const node = this.nodes[label];
+    if (!node) return;
+    const visited = {};
+    const stack = [];
+    stack.push(node);
+    while (stack.length) {
+      const currentItem = stack.pop();
+      if (visited[currentItem]) continue;
+      console.log(currentItem);
+      visited[currentItem] = true;
+      const adjacentNodes = this.adjacencyList[currentItem];
+      for (let i = 0; i < adjacentNodes.length; i++) {
+        if (visited[adjacentNodes[i]]) continue;
+        stack.push(adjacentNodes[i]);
+      }
+    }
+  };
+
+  traverseBFRecursion = (label) => {
+    const node = this.nodes[label];
+    if (!node) return;
+    const visited = {};
+    const queue = [];
+    queue.push(node)
+    traverseBFRecursionImplementation(queue, visited);
+  };
+  
+  traverseBFRecursionImplementation =  (queue, visited) => {
+    if(!queue.length) return;
+     const current = queue.shift();
+    if(visited[current]){
+      return this.traverseBFRecursionImplementation(queue,visited);
+    }
+    console.log(current);
+    visited[current] = true;
+    const adjacentNode = this.adjacencyList[current];
+    for(let i = 0; i < adjacentNode.length; i++){
+      if(visited[adjacentNode[i]]) continue;
+      queue.push(adjacentNode[i])
+    }
+    return this.traverseBFRecursionImplementation(queue,visited)
+  }
+
+  traverseBFIteration = (label) => {
+    const node = this.nodes[label];
+    if (!node) return;
+    const visited = {};
+    const queue = [];
+    queue.push(node);
+    while (queue.length) {
+      const current = queue.shift();
+      if (visited[current]) continue;
+      console.log(current);
+      visited[current] = true;
+      const adjacentNodes = this.adjacencyList[current];
+      for (let i = 0; i < adjacentNodes.length; i++) {
+        if (visited[adjacentNodes[i]]) continue;
+        queue.push(adjacentNodes[i]);
+      }
+    }
+  };
 }
 
 const graph = new Graph();
